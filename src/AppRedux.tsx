@@ -4,8 +4,19 @@ import './App.css';
 import {Counter} from './counter/Counter';
 import {CustomizationCounter} from "./counter/CustomizationCounter";
 import {restoreState, saveState} from "./localStorage";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./bll/store";
+import {incValueAC} from "./bll/counter-reducer";
 
-function App() {
+function AppRedux() {
+    const value = useSelector<AppStateType, number>(state => state.counter.value)
+
+    const dispatch = useDispatch()
+    const incHandler = () => {
+        dispatch(incValueAC())
+    }
+
+
     let [count, setCount] = useState(0)
     let [maxValue, setMaxValue] = useState('')
     let [startValue, setStartValue] = useState('')
@@ -67,31 +78,33 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <Counter inc={incCount}
-                         reset={resetCount}
-                         count={count}
-                         maxValue={maxValue}
-                         startValue={startValue}
-                         onShow={onShow}
+                {/*<h1>{value}</h1>*/}
+                {/*<button onClick={incHandler}>inc</button>*/}
+                    <Counter inc={incCount}
+                             reset={resetCount}
+                             count={count}
+                             maxValue={maxValue}
+                             startValue={startValue}
+                             onShow={onShow}
 
-                         set={set}
-                         btnSet={btnSet}
-                         onChange1={onChange1}
-                         onChange={onChange}
-                         setOnShow={setOnShow}
-                />
-                {(!onShow) ?
-                    <CustomizationCounter
-                        set={newSet}
-                        startValue={startValue}
-                        maxValue={maxValue}
-                        btnSet={btnSet}
-                        onChange1={onChange1}
-                        onChange={onChange}
-                    /> : <div></div>}
+                             set={set}
+                             btnSet={btnSet}
+                             onChange1={onChange1}
+                             onChange={onChange}
+                             setOnShow={setOnShow}
+                    />
+                    {(!onShow) ?
+                        <CustomizationCounter
+                            set={newSet}
+                            startValue={startValue}
+                            maxValue={maxValue}
+                            btnSet={btnSet}
+                            onChange1={onChange1}
+                            onChange={onChange}
+                        /> : <div></div>}
             </header>
         </div>
     );
 }
 
-export default App;
+export default AppRedux;
